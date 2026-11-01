@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ScreenShare</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+            <div class="brand">
+                <div class="brand-icon">S</div>
+                <span>ScreenShare</span>
+            </div>
+
+            <div class="status">
+                <span class="status-dot"></span>
+                Sistema online
+            </div>
+
+        </header>
+
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <span class="eyebrow">SCREENSHARE STUDIO</span>
+
+            <h1>
+                Compartilhe sua tela.<br>
+                <span>Sem complicação.</span>
+            </h1>
+
+            <p>
+                Compartilhe seu monitor com outra pessoa,
+                de maneira simples e rápida.
+            </p>
+
+        </section>
+
+
+        <!-- INÍCIO -->
+
+        <section class="actions" id="homeSection">
+
+            <!-- TRANSMITIR -->
+
+            <div class="action-card">
+
+                <div class="card-icon">↑</div>
+
+                <h2>Compartilhar tela</h2>
+
+                <p>
+                    Inicie uma transmissão e convide
+                    alguém para acompanhar sua tela.
+                </p>
+
+                <div class="stream-settings">
+
+                    <div class="setting-group">
+
+                        <label for="resolutionSelect">
+                            Resolução
+                        </label>
+
+                        <select id="resolutionSelect">
+                            <option value="original">Original (máxima)</option>
+                            <option value="1080">1920 × 1080</option>
+                            <option value="720">1280 × 720</option>
+                            <option value="480">854 × 480</option>
+                        </select>
+
+                    </div>
+
+                    <div class="setting-group">
+
+                        <label for="fpsSelect">
+                            Taxa de quadros
+                        </label>
+
+                        <select id="fpsSelect">
+                            <option value="15">15 FPS</option>
+                            <option value="30" selected>30 FPS</option>
+                            <option value="60">60 FPS</option>
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <label class="audio-option">
+                    <input type="checkbox" id="shareAudio">
+                    <span>Compartilhar áudio da tela</span>
+                </label>
+
+                <button id="shareButton">
+                    Compartilhar minha tela
+                    <span>→</span>
+                </button>
+
+            </div>
+
+
+            <!-- ASSISTIR -->
+
+            <div class="action-card">
+
+                <div class="card-icon">↓</div>
+
+                <h2>Assistir tela</h2>
+
+                <p>
+                    Insira o convite recebido para
+                    visualizar uma transmissão.
+                </p>
+
+                <div class="input-group">
+
+                    <input
+                        type="text"
+                        id="inviteInput"
+                        placeholder="Cole o código do convite..."
+                        maxlength="12"
+                    >
+
+                </div>
+
+                <button id="watchButton">
+                    Conectar à transmissão
+                    <span>→</span>
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- STUDIO DO TRANSMISSOR -->
+
+        <section class="studio-section" id="studioSection" hidden>
+
+            <div class="studio-heading">
+
+                <div>
+                    <span class="eyebrow">PAINEL DO TRANSMISSOR</span>
+                    <h2>Seu estúdio</h2>
+                    <p>Controle sua transmissão em tempo real.</p>
+                </div>
+
+                <div class="live-indicator" id="liveIndicator">
+                    <span></span>
+                    AO VIVO
+                </div>
+
+            </div>
+
+
+            <!-- PREVIEW LOCAL -->
+
+            <div class="studio-preview">
+
+                <div class="preview-header">
+
+                    <div>
+                        <span class="preview-label">SUA TELA</span>
+                        <h3>Prévia da transmissão</h3>
+                    </div>
+
+                    <span class="preview-resolution" id="localResolution">
+                        Aguardando captura
+                    </span>
+
+                </div>
+
+                <div class="video-container">
+
+                    <video
+                        id="localVideo"
+                        autoplay
+                        muted
+                        playsinline
+                    ></video>
+
+                    <div class="video-placeholder" id="localPlaceholder">
+                        <div class="placeholder-icon">▣</div>
+                        <h3>Aguardando compartilhamento</h3>
+                        <p>Sua tela aparecerá aqui.</p>
+                    </div>
+
+                </div>
+
+                <div class="preview-footer">
+
+                    <span id="localFps">FPS: --</span>
+                    <span id="localAudioStatus">Áudio: desativado</span>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONVITE -->
+
+            <div class="invite-panel">
+
+                <div class="panel-heading">
+                    <div>
+                        <h3>Seu convite</h3>
+                        <p>Envie este código para quem deseja assistir.</p>
+                    </div>
+                </div>
+
+                <div class="invite-controls">
+
+                    <input
+                        type="text"
+                        id="roomCode"
+                        readonly
+                        placeholder="Aguardando convite..."
+                    >
+
+                    <button id="copyInviteButton">
+                        Copiar convite
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONTROLES -->
+
+            <div class="control-panel">
+
+                <div class="panel-heading">
+                    <div>
+                        <h3>Controles da transmissão</h3>
+                        <p>Gerencie sua transmissão.</p>
+                    </div>
+                </div>
+
+                <div class="control-grid">
+
+                    <button class="control-button" id="pauseButton">
+                        <span class="control-icon">Ⅱ</span>
+                        <span id="pauseLabel">Pausar</span>
+                    </button>
+
+                    <button class="control-button" id="audioButton">
+                        <span class="control-icon">♫</span>
+                        <span id="audioLabel">Áudio ligado</span>
+                    </button>
+
+                    <button class="control-button danger" id="stopButton">
+                        <span class="control-icon">■</span>
+                        <span>Encerrar</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- VISUALIZADOR REMOTO -->
+
+        <section class="viewer" id="viewer">
+
+            <div class="viewer-header">
+
+                <div>
+                    <span class="eyebrow">VISUALIZADOR</span>
+                    <h2>Tela compartilhada</h2>
+                </div>
+
+                <div class="viewer-actions">
+
+                    <span class="viewer-status" id="viewerStatus">
+                        Aguardando conexão
+                    </span>
+
+                    <button
+                        id="fullscreenButton"
+                        class="icon-button"
+                        title="Tela cheia"
+                    >
+                        ⛶
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="remote-container" id="remoteContainer">
+
+                <video
+                    id="remoteVideo"
+                    autoplay
+                    playsinline
+                    controls
+                ></video>
+
+                <div class="viewer-placeholder" id="viewerPlaceholder">
+
+                    <div class="placeholder-icon">▣</div>
+
+                    <h3>Nenhuma transmissão ativa</h3>
+
+                    <p>
+                        Quando alguém compartilhar a tela,
+                        ela aparecerá aqui.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+
+        <footer>
+
+            <span>ScreenShare © 2026</span>
+
+            <span>Compartilhamento simples e direto.</span>
+
+        </footer>
+
+    </main>
+
+
+    <script src="/static/js/app.js"></script>
+
+</body>
+
+</html>
